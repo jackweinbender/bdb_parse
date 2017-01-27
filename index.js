@@ -1,4 +1,9 @@
 let fs = require('fs')
+let pd = require('pretty-data').pd
+let Entities = require('html-entities').XmlEntities;
+var xml = require('xml2js').parseString;
+
+let html = new Entities();
 
 fs.readFile('data/raw.html', "utf-8", (err, data) => {
   if (err) throw err
@@ -23,15 +28,13 @@ fs.readFile('data/raw.html', "utf-8", (err, data) => {
         write_section(data, "02-abbr.html")
         break;
       case 4:
-        out = do_lex(data)
-        write_section(data, "03-heb_lex.html")
+        out = do_lex(data, "hebrew")
         break;
       case 5:
-        out = do_lex(data)
-        write_section(data, "04-aram_lex.html")
+        out = do_lex(data, "aramaic")
         break;
       case 6:
-        out = do_lex(data)
+        out = do_addenda(data)
         write_section(data, "05-addenda.html")
         break;
       default:
@@ -44,7 +47,6 @@ fs.readFile('data/raw.html', "utf-8", (err, data) => {
 
 
 function split_lexicon(data){
-  // Splits raw.html into H1 sections
   data = data
     .split("<h1>")
   return data.map( section => {
@@ -63,11 +65,10 @@ function write_section(obj, path){
   })
 }
 
-function cleanup(content){
-  return content
-    .replace(/<!--/g, "")
-    .replace(/-->/g, "")
-    .replace(/<p class="p">(.*)<\/p>/g, '$1')
+function prettify(obj){
+  obj.content = pd.xml(obj.content)
+
+  return obj
 }
 
 function do_title(title){
@@ -75,36 +76,71 @@ function do_title(title){
   title.content = title.content
     .replace(/<p class="center">(.*)<\/p>/g, "$1")
 
-  return title
+  return prettify(title)
 
 }
 function do_preface(preface){
   preface = format_h1(preface)
   preface.content = preface.content
     .replace(/<p class="p">(.*)<\/p>/g, "<p>$1</p>")
-  return preface
+
+  return prettify(preface)
 }
 function do_abbr(abbr){
   abbr = format_h1(abbr)
   abbr.content = abbr.content
     .replace(/<li style="list-style-type:none">(.*)<\/li>/g, "<li>$1</li>")
     .replace(/<p class="p">(.*)<\/p>/g, "<p>$1</p>")
-  return abbr
+  return prettify(abbr)
 }
-function do_lex(lex){
+function do_lex(lex, lang){
+  lex.content = lex.content
+    .split(/<h2>/)
+
+    note = lex.content.shift().trim()
+    if (note.trim() !== ""){
+      fs.writeFile('data/lexicon/' + lang + '/00-note.html', note , err => {
+        if (err) throw err;
+      })
+    }
+
+  lex.content = lex.content
+    .map( (letter, index) => {
+      letter = letter.split("</h2>")
+
+      let title = letter[0].replace(/<span class="Bwhebb">(.*?)<\/span>/, "$1")
+      if (index === 17){ title = "c" }
+      return {
+        title: html.decode(title),
+        content: letter[1]
+      }
+    })
+    .map( letter => {
+      return do_letter_section(letter)
+    })
+    .forEach( (letter, index) => {
+      fs.mkdir('data/lexicon/' + lang + '/' + index + "-" + letter.title, err => {
+        if (err) throw err
+      })
+    })
+}
+function do_addenda(entries){ return do_letter_section(entries) }
+function do_letter_section(lex){
   lex.content = lex.content
     .replace(/<!--(.*?)-->/g, "$1")
     .replace(/<p class="p">(.*)<\/p>/g, "$1")
+    .split(/<ENTRY>/i)
+    .filter( entry => {
+      return entry.trim() !== ""
+    })
+    .map( data => {
+      return pd.xml("<entry>" + data.trim() + "</entry>\n\n\n")
+    })
+    .map( data => {
+      return html.decode(data)
+    })
+    .join("")
   return lex
-}
-function do_lex(lex){
-  lex.content = lex.content
-    .replace(/<!--(.*?)-->/g, "$1")
-    .replace(/<p class="p">(.*)<\/p>/g, "$1")
-  return lex
-}
-function do_addenda(addenda){
-  return addenda
 }
 
 function format_h1(section){

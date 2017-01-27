@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm run clean && node index.js",
+    "clean": "rm -rf data/lexicon && mkdir data/lexicon && mkdir data/lexicon/hebrew && mkdir data/lexicon/aramaic"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/jackweinbender/bdb_parse/issues"
   },
-  "homepage": "https://github.com/jackweinbender/bdb_parse#readme"
+  "homepage": "https://github.com/jackweinbender/bdb_parse#readme",
+  "dependencies": {
+    "html-entities": "^1.2.0",
+    "pretty-data": "^0.40.0",
+    "xml2js": "^0.4.17"
+  }
 }
