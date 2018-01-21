@@ -95,6 +95,7 @@ function do_abbr(abbr){
   return prettify(abbr)
 }
 function do_lex(lex, lang){
+  lex = format_h1(lex)
   lex.content = lex.content
     .split(/<h2>/)
 
@@ -122,7 +123,12 @@ function do_lex(lex, lang){
 
   return lex
 }
-function do_addenda(entries){ return do_letter_section(entries) }
+function do_addenda(addenda){
+  addenda = format_h1(addenda)
+  addenda.content = do_letter_section(addenda)
+
+  return addenda
+}
 function do_letter_section(letter){
   letter.content = letter.content
     .replace(/<!--/g, "")
@@ -151,11 +157,11 @@ function do_letter_section(letter){
     .map( data => {
       return `<entry>${data.trim()}</entry>\n`
     })
-    .map( data => {
-      return pd.xmlmin(data)
-    })
+    // .map( data => {
+    //   return pd.xmlmin(data)
+    // })
     .join("")
-  return `<letter letter=${letter.title}>` + letter.content + `</letter>`
+  return `<section section=${letter.title}>` + letter.content + `</section>`
 }
 
 function format_h1(section){
