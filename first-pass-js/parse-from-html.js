@@ -158,7 +158,7 @@ function do_letter_section(letter){
       return html.decode(data)
     })
     .map( data => {
-      return `<entry>${data}</entry>`
+      return `<entry>${data}</entry>\n`
     })
     .join("")
   return `<letter letter=${letter.title}>` + letter.content + `</letter>`
