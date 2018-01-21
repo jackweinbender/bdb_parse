@@ -1,11 +1,10 @@
 let fs = require('fs')
 let pd = require('pretty-data').pd
 let Entities = require('html-entities').XmlEntities;
-var xml = require('xml2js').parseString;
 
 let html = new Entities();
 
-fs.readFile('data/raw.html', "utf-8", (err, data) => {
+fs.readFile('raw.html', "utf-8", (err, data) => {
   if (err) throw err
 
   let lexicon = split_lexicon(data)
@@ -25,7 +24,7 @@ fs.readFile('data/raw.html', "utf-8", (err, data) => {
         break;
       case 3:
         out = do_abbr(data)
-        write_section(data, "02-abbr.html")
+        write_section(out, "02-abbr.html")
         break;
       case 4:
         out = do_lex(data, "hebrew")
@@ -60,7 +59,7 @@ function split_lexicon(data){
 }
 
 function write_section(obj, path){
-  fs.writeFile('data/lexicon/'+ path, obj.content , err => {
+  fs.writeFile('lexicon/'+ path, obj.content , err => {
     if (err) throw err;
   })
 }
@@ -97,12 +96,7 @@ function do_lex(lex, lang){
   lex.content = lex.content
     .split(/<h2>/)
 
-    note = lex.content.shift().trim()
-    if (note.trim() !== ""){
-      fs.writeFile('data/lexicon/' + lang + '/00-note.html', note , err => {
-        if (err) throw err;
-      })
-    }
+  note = lex.content.shift().trim()
 
   lex.content = lex.content
     .map( (letter, index) => {
@@ -118,29 +112,45 @@ function do_lex(lex, lang){
     .map( letter => {
       return do_letter_section(letter)
     })
-    .forEach( (letter, index) => {
-      fs.mkdir('data/lexicon/' + lang + '/' + index + "-" + letter.title, err => {
-        if (err) throw err
-      })
-    })
+
+  lex.content.unshift(note.trim())
+  lex.content = lex.content.join("")
+  lex.content = `<lexicon lang=${lang}>` + lex.content + `</lexicon>`
+
+  switch (lang) {
+    case "aramaic":
+      file = "04-aramaic.html"
+      break;
+    default:
+      file = "03-hebrew.html"
+      break;
+  }
+
+  fs.writeFile("lexicon/" + file, pd.xml(lex.content), err => {
+    if (err) throw err;
+  })
 }
 function do_addenda(entries){ return do_letter_section(entries) }
-function do_letter_section(lex){
-  lex.content = lex.content
+function do_letter_section(letter){
+  letter.content = letter.content
     .replace(/<!--(.*?)-->/g, "$1")
     .replace(/<p class="p">(.*)<\/p>/g, "$1")
+    .replace(/<span style="color:blue">(\d+):<\/span>\s*/g, "$1" )
+    .replace(/<(\/*)STRONGS>/g, "<$1strongs>" )
+    .replace(/<(\/*)ENTRYNUM>/g, "<$1entrynum>" )
+    .replace(/<(\/*)PAGE>/g, "<$1page>" )
     .split(/<ENTRY>/i)
     .filter( entry => {
       return entry.trim() !== ""
     })
     .map( data => {
-      return pd.xml("<entry>" + data.trim() + "</entry>\n\n\n")
+      return pd.xmlmin("<entry>" + data.trim() + "</entry>", false)
     })
     .map( data => {
       return html.decode(data)
     })
     .join("")
-  return lex
+  return `<letter letter=${letter.title}>` + letter.content + `</letter>`
 }
 
 function format_h1(section){
