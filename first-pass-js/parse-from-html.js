@@ -16,11 +16,11 @@ fs.readFile('raw.html', "utf-8", (err, data) => {
         break;
       case 1:
         out = do_title(data)
-        write_section(data, "00-title.html")
+        write_section(out, "00-title.html")
         break;
       case 2:
         out= do_preface(data)
-        write_section(data, "01-preface.html")
+        write_section(out, "01-preface.html")
         break;
       case 3:
         out = do_abbr(data)
@@ -28,13 +28,15 @@ fs.readFile('raw.html', "utf-8", (err, data) => {
         break;
       case 4:
         out = do_lex(data, "hebrew")
+        write_section(out, "03-hebrew.html")
         break;
       case 5:
         out = do_lex(data, "aramaic")
+        write_section(out, "04-aramaic.html")
         break;
       case 6:
         out = do_addenda(data)
-        write_section(data, "05-addenda.html")
+        write_section(out, "05-addenda.html")
         break;
       default:
         console.log("Too many sections!")
@@ -65,7 +67,7 @@ function write_section(obj, path){
 }
 
 function prettify(obj){
-  obj.content = pd.xml(obj.content)
+  obj.content = pd.xmlmin(obj.content)
 
   return obj
 }
@@ -118,18 +120,7 @@ function do_lex(lex, lang){
   lex.content = lex.content.join("")
   lex.content = `<lexicon lang=${lang}>` + lex.content + `</lexicon>`
 
-  switch (lang) {
-    case "aramaic":
-      file = "04-aramaic.html"
-      break;
-    default:
-      file = "03-hebrew.html"
-      break;
-  }
-
-  fs.writeFile("../lexicon/" + file, lex.content, err => {
-    if (err) throw err;
-  })
+  return lex
 }
 function do_addenda(entries){ return do_letter_section(entries) }
 function do_letter_section(letter){
@@ -158,7 +149,10 @@ function do_letter_section(letter){
       return html.decode(data)
     })
     .map( data => {
-      return `<entry>${data}</entry>\n`
+      return `<entry>${data.trim()}</entry>\n`
+    })
+    .map( data => {
+      return pd.xmlmin(data)
     })
     .join("")
   return `<letter letter=${letter.title}>` + letter.content + `</letter>`
