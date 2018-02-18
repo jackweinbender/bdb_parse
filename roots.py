@@ -72,6 +72,9 @@ for el in root.iter():
                     'page_id': int(current_page)
                 }
             }
+            if 'mod' in el.attrib:
+                root['fields']['homophone'] = el.attrib['mod']
+
             roots.append(root)
             key += 1
             
