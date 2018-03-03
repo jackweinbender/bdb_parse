@@ -1,0 +1,508 @@
+[
+  {
+    "model": "dictionary.letter",
+    "pk": 1,
+    "fields": {
+      "language": "hebrew",
+      "char": "א",
+      "translit": "ʔ",
+      "name": "aleph",
+      "sort_order": 1
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 2,
+    "fields": {
+      "language": "hebrew",
+      "char": "ב",
+      "translit": "b",
+      "name": "bet",
+      "sort_order": 2
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 3,
+    "fields": {
+      "language": "hebrew",
+      "char": "ג",
+      "translit": "g",
+      "name": "gimmel",
+      "sort_order": 3
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 4,
+    "fields": {
+      "language": "hebrew",
+      "char": "ד",
+      "translit": "d",
+      "name": "dalet",
+      "sort_order": 4
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 5,
+    "fields": {
+      "language": "hebrew",
+      "char": "ה",
+      "translit": "h",
+      "name": "he",
+      "sort_order": 5
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 6,
+    "fields": {
+      "language": "hebrew",
+      "char": "ו",
+      "translit": "w",
+      "name": "waw",
+      "sort_order": 6
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 7,
+    "fields": {
+      "language": "hebrew",
+      "char": "ז",
+      "translit": "z",
+      "name": "zayin",
+      "sort_order": 7
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 8,
+    "fields": {
+      "language": "hebrew",
+      "char": "ח",
+      "translit": "ḥ",
+      "name": "ḥet",
+      "sort_order": 8
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 9,
+    "fields": {
+      "language": "hebrew",
+      "char": "ט",
+      "translit": "ṭ",
+      "name": "ṭet",
+      "sort_order": 9
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 10,
+    "fields": {
+      "language": "hebrew",
+      "char": "י",
+      "translit": "y",
+      "name": "yod",
+      "sort_order": 10
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 11,
+    "fields": {
+      "language": "hebrew",
+      "char": "כ",
+      "translit": "k",
+      "name": "kap",
+      "sort_order": 11
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 12,
+    "fields": {
+      "language": "hebrew",
+      "char": "ל",
+      "translit": "l",
+      "name": "lamed",
+      "sort_order": 12
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 13,
+    "fields": {
+      "language": "hebrew",
+      "char": "מ",
+      "translit": "m",
+      "name": "mem",
+      "sort_order": 13
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 14,
+    "fields": {
+      "language": "hebrew",
+      "char": "נ",
+      "translit": "n",
+      "name": "nun",
+      "sort_order": 14
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 15,
+    "fields": {
+      "language": "hebrew",
+      "char": "ס",
+      "translit": "s",
+      "name": "samek",
+      "sort_order": 15
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 16,
+    "fields": {
+      "language": "hebrew",
+      "char": "ע",
+      "translit": "ʕ",
+      "name": "ayin",
+      "sort_order": 16
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 17,
+    "fields": {
+      "language": "hebrew",
+      "char": "פ",
+      "translit": "p",
+      "name": "pe",
+      "sort_order": 17
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 18,
+    "fields": {
+      "language": "hebrew",
+      "char": "צ",
+      "translit": "ṣ",
+      "name": "tsade",
+      "sort_order": 18
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 19,
+    "fields": {
+      "language": "hebrew",
+      "char": "ק",
+      "translit": "q",
+      "name": "qop",
+      "sort_order": 19
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 20,
+    "fields": {
+      "language": "hebrew",
+      "char": "ר",
+      "translit": "r",
+      "name": "resh",
+      "sort_order": 20
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 21,
+    "fields": {
+      "language": "hebrew",
+      "char": "שׂ",
+      "translit": "ś",
+      "name": "sin",
+      "sort_order": 21
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 22,
+    "fields": {
+      "language": "hebrew",
+      "char": "שׁ",
+      "translit": "ṥ",
+      "name": "shin",
+      "sort_order": 22
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 23,
+    "fields": {
+      "language": "hebrew",
+      "char": "ת",
+      "translit": "t",
+      "name": "tav",
+      "sort_order": 23
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 101,
+    "fields": {
+      "language": "aramaic",
+      "char": "א",
+      "translit": "ʔ",
+      "name": "aleph",
+      "sort_order": 1
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 102,
+    "fields": {
+      "language": "aramaic",
+      "char": "ב",
+      "translit": "b",
+      "name": "bet",
+      "sort_order": 2
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 103,
+    "fields": {
+      "language": "aramaic",
+      "char": "ג",
+      "translit": "g",
+      "name": "gimmel",
+      "sort_order": 3
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 104,
+    "fields": {
+      "language": "aramaic",
+      "char": "ד",
+      "translit": "d",
+      "name": "dalet",
+      "sort_order": 4
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 105,
+    "fields": {
+      "language": "aramaic",
+      "char": "ה",
+      "translit": "h",
+      "name": "he",
+      "sort_order": 5
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 106,
+    "fields": {
+      "language": "aramaic",
+      "char": "ו",
+      "translit": "w",
+      "name": "waw",
+      "sort_order": 6
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 107,
+    "fields": {
+      "language": "aramaic",
+      "char": "ז",
+      "translit": "z",
+      "name": "zayin",
+      "sort_order": 7
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 108,
+    "fields": {
+      "language": "aramaic",
+      "char": "ח",
+      "translit": "ḥ",
+      "name": "ḥet",
+      "sort_order": 8
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 109,
+    "fields": {
+      "language": "aramaic",
+      "char": "ט",
+      "translit": "ṭ",
+      "name": "ṭet",
+      "sort_order": 9
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 110,
+    "fields": {
+      "language": "aramaic",
+      "char": "י",
+      "translit": "y",
+      "name": "yod",
+      "sort_order": 10
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 111,
+    "fields": {
+      "language": "aramaic",
+      "char": "כ",
+      "translit": "k",
+      "name": "kap",
+      "sort_order": 11
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 112,
+    "fields": {
+      "language": "aramaic",
+      "char": "ל",
+      "translit": "l",
+      "name": "lamed",
+      "sort_order": 12
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 113,
+    "fields": {
+      "language": "aramaic",
+      "char": "מ",
+      "translit": "m",
+      "name": "mem",
+      "sort_order": 13
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 114,
+    "fields": {
+      "language": "aramaic",
+      "char": "נ",
+      "translit": "n",
+      "name": "nun",
+      "sort_order": 14
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 115,
+    "fields": {
+      "language": "aramaic",
+      "char": "ס",
+      "translit": "s",
+      "name": "samek",
+      "sort_order": 15
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 116,
+    "fields": {
+      "language": "aramaic",
+      "char": "ע",
+      "translit": "ʕ",
+      "name": "ayin",
+      "sort_order": 16
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 117,
+    "fields": {
+      "language": "aramaic",
+      "char": "פ",
+      "translit": "p",
+      "name": "pe",
+      "sort_order": 17
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 118,
+    "fields": {
+      "language": "aramaic",
+      "char": "צ",
+      "translit": "ṣ",
+      "name": "tsade",
+      "sort_order": 18
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 119,
+    "fields": {
+      "language": "aramaic",
+      "char": "ק",
+      "translit": "q",
+      "name": "qop",
+      "sort_order": 19
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 120,
+    "fields": {
+      "language": "aramaic",
+      "char": "ר",
+      "translit": "r",
+      "name": "resh",
+      "sort_order": 20
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 121,
+    "fields": {
+      "language": "aramaic",
+      "char": "שׂ",
+      "translit": "ś",
+      "name": "sin",
+      "sort_order": 21
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 122,
+    "fields": {
+      "language": "aramaic",
+      "char": "שׁ",
+      "translit": "ṥ",
+      "name": "shin",
+      "sort_order": 22
+    }
+  },
+  {
+    "model": "dictionary.letter",
+    "pk": 123,
+    "fields": {
+      "language": "aramaic",
+      "char": "ת",
+      "translit": "t",
+      "name": "tav",
+      "sort_order": 23
+    }
+  }
+]

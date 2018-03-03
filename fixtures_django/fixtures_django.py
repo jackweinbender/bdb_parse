@@ -2,7 +2,7 @@ import xml.etree.ElementTree as ET
 import json
 import unicodedata
 
-tree = ET.parse('BrownDriverBriggs.xml')
+tree = ET.parse('../BrownDriverBriggs.xml')
 root = tree.getroot()
 
 roots = []
