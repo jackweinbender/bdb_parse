@@ -22,9 +22,7 @@ with open('letters.json', 'r') as letter_file:
             'type': 'letter',
             'id': l['id'],
             'attributes': l['fields'],
-            'relationships': {
-                'roots':[]
-            }
+            'roots':[]
         }
         letter['attributes']['char'] = unicodedata.normalize('NFC', letter['attributes']['char'].strip())
         letters.append(letter)
@@ -53,11 +51,16 @@ page = {
         'number': int(current_page)
     }
 }
-pages.append(page)
 
+first_of_page = True
 for el in root.iter():
     if el.tag == '{http://openscriptures.github.com/morphhb/namespace}page':
+        if first_of_page == True:
+            page['attributes']['first_root'] = root['id']
+            
+        pages.append(page)
         current_page = el.attrib['p']
+        first_of_page = True
         page = {
             'type':'page',
             'id': int(current_page),
@@ -65,7 +68,6 @@ for el in root.iter():
                 'number': int(current_page)
             }
         }
-        pages.append(page)
     if el.tag == '{http://openscriptures.github.com/morphhb/namespace}part':
         language = el.attrib['{http://www.w3.org/XML/1998/namespace}lang']
         letter = el.attrib['title']
@@ -78,57 +80,27 @@ for el in root.iter():
                 'id': key,
                 'attributes': {
                     'root': w.text,
-                },
-                'relationships': {
-                    'letter':{
-                        'data': { 'type':'letter' ,'id': letter_id }
-                    },
-                    'page':{
-                        'data': { 'type':'page', 'id': current_page }
-                    }
+                    'letter': letter_id,
+                    'page': current_page
                 }
             }
             roots.append(root)
-
-            
+            if first_of_page == True:
+                page['attributes']['first_root'] = root['id']
+                first_of_page == False
 
             key += 1
             
-os.makedirs(os.path.dirname('dist/roots/'), exist_ok=True)
-with open('dist/roots/index.json', 'w') as outfile:
-    json.dump({'data': roots}, outfile, indent = 2, ensure_ascii=False)
+os.makedirs(os.path.dirname('dist/'), exist_ok=True)
+with open('dist/roots.json', 'w') as outfile:
+    json.dump(roots, outfile, indent = 2, ensure_ascii=False)
 
-for root in roots:
-    filename = f"dist/roots/{root['id']}/index.json"
-    os.makedirs(os.path.dirname(filename), exist_ok=True)
-    with open(filename, 'w') as outfile:
-        json.dump({'data': root}, outfile, indent = 2, ensure_ascii=False)
-
-os.makedirs(os.path.dirname('dist/pages/'), exist_ok=True)
-with open('dist/pages/index.json', 'w') as outfile:
-    json.dump({'data': pages}, outfile, indent = 2, ensure_ascii=False)
-
-for page in pages:
-    filename = f"dist/pages/{page['id']}/index.json"
-    os.makedirs(os.path.dirname(filename), exist_ok=True)
-    with open(filename, 'w') as outfile:
-        json.dump({'data': page}, outfile, indent = 2, ensure_ascii=False)
+with open('dist/pages.json', 'w') as outfile:
+    json.dump(pages, outfile, indent = 2, ensure_ascii=False)
 
 for letter in letters:
-    rs = [r for r in roots if r['relationships']['letter']['data']['id'] == letter['id']]
+    rs = [r for r in roots if r['attributes']['letter'] == letter['id']]
+    letter['attributes']['roots'] = rs
 
-    for r in rs:
-        rt = {
-            'type': r['type'],
-            'id': r['id']
-        }
-        letter['relationships']['roots'].append(rt)
-    
-    filename = f"dist/letters/{letter['id']}/index.json"
-    os.makedirs(os.path.dirname(filename), exist_ok=True)
-    
-    with open(filename, 'w') as outfile:
-        json.dump({ 'data': letter, 'included': rs }, outfile, indent = 2, ensure_ascii=False)
-
-with open('dist/letters/index.json', 'w') as outfile:
+with open('dist/letters.json', 'w') as outfile:
     json.dump({'data':letters}, outfile, indent = 2, ensure_ascii=False)
