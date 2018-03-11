@@ -16,22 +16,25 @@ letters = []
 title = [{
     'id': 'title',
     'section': 'title',
-    'next': f'/preface/{roman.toRoman(5).lower()}/',
+    'emory_page': 1,
+    'next': f'/preface-{roman.toRoman(5).lower()}.html',
     'prev': '/'
 }]
 preface = [{
     'id': roman.toRoman(x).lower(),
     'section': 'preface',
-    'next': f'/preface/{roman.toRoman(x + 1).lower()}',
-    'prev': f'/preface/{roman.toRoman(x - 1).lower()}',
+    'emory_page': x - 2,
+    'next': f'/preface-{roman.toRoman(x + 1).lower()}.html',
+    'prev': f'/preface-{roman.toRoman(x - 1).lower()}.html',
     }
         for x in range(5, 13)]
 
 abbrs = [{
     'id': roman.toRoman(x).lower(), 
     'section': 'abbr',
-    'next': roman.toRoman(x + 1).lower(),
-    'prev': roman.toRoman(x - 1).lower(),
+    'emory_page': x - 2,
+    'next': f'/abbr-{roman.toRoman(x + 1).lower()}.html',
+    'prev': f'/abbr-{roman.toRoman(x - 1).lower()}.html',
     }
         for x in range(13, 20)]
 
@@ -41,8 +44,9 @@ aramaic = []
 errata = [{
     'id': int(x),
     'section': 'errata',
-    'next': f'/errata/{x + 1}/',
-    'prev': f'/errata/{x - 1}/',
+    'emory_page': x + 18,
+    'next': f'/errata-{x + 1}.html',
+    'prev': f'/errata-{x - 1}.html',
     }
         for x in range(1119, 1128)]
 
@@ -83,8 +87,9 @@ def get_letter_id(letter, language):
 page = {
     'id': current_page,
     'section': 'hebrew',
-    'next': '/hebrew/2/',
-    'prev': f'/abbr/{roman.toRoman(20).lower()}/'
+    'emory_page': 19,
+    'next': '/hebrew-2.html',
+    'prev': f'/abbr-{roman.toRoman(20).lower()}.html'
 }
 
 first_of_page = True
@@ -95,19 +100,20 @@ for el in root.iter():
         
         if current_page > 1077:
             page['section'] = 'aramaic'
-            page['next'] = f'/aramaic/{current_page + 1}/'
-            page['prev'] = f'/aramaic/{current_page - 1}/'
+            page['next'] = f'/aramaic-{current_page + 1}.html'
+            page['prev'] = f'/aramaic-{current_page - 1}.html'
             aramaic.append(page)
         else:
             page['section'] = 'hebrew'
-            page['next'] = f'/hebrew/{current_page + 1}/'
-            page['prev'] = f'/hebrew/{current_page - 1}/'
+            page['next'] = f'/hebrew-{current_page + 1}.html'
+            page['prev'] = f'/hebrew-{current_page - 1}.html'
             hebrew.append(page)
         
         current_page = int(el.attrib['p'])
         first_of_page = True
         page = {
             'id': current_page,
+            'emory_page': current_page + 18,
         }
         
     if el.tag == '{http://openscriptures.github.com/morphhb/namespace}part':
@@ -132,18 +138,19 @@ for el in root.iter():
 aramaic.append({
     'id': 1118,
     'section': 'aramaic',
-    'prev': '/aramaic/1117/'
+    'prev': '/aramaic-1117.html',
+    'emory_page': 1136,
 })
 # Link Sections
-preface[0]['prev'] = f'/'
-preface[-1]['next'] = f'/abbr/{roman.toRoman(13).lower()}'
-abbrs[0]['prev'] = f'/preface/{roman.toRoman(12).lower()}/'
-abbrs[-1]['next'] = f'/hebrew/1/'
-hebrew[0]['prev'] = f'/abbr/{roman.toRoman(19).lower()}/'
-hebrew[-1]['next'] = f'/aramaic/1078/'
-aramaic[0]['prev'] = f'/hebrew/1077/'
-aramaic[-1]['next'] = f'/errata/1119/'
-errata[0]['prev'] = f'/aramaic/1118/'
+preface[0]['prev'] = '/'
+preface[-1]['next'] = f'/abbr-{roman.toRoman(13).lower()}.html'
+abbrs[0]['prev'] = f'/preface-{roman.toRoman(12).lower()}.html'
+abbrs[-1]['next'] = f'/hebrew-1.html'
+hebrew[0]['prev'] = f'/abbr-{roman.toRoman(19).lower()}.html'
+hebrew[-1]['next'] = f'/aramaic-1078.html'
+aramaic[0]['prev'] = f'/hebrew-1077.html'
+aramaic[-1]['next'] = f'/errata1119.html'
+errata[0]['prev'] = f'/aramaic-1118.html'
 errata[-1]['next'] = '/'
 
 os.makedirs(os.path.dirname('dist/'), exist_ok=True)
