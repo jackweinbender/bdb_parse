@@ -11,7 +11,7 @@ heb = { x: [] for x in range(1, 24) }
 ar = { y: [] for y in range(101, 124) }
 roots = {**heb, **ar}
 
-letters = []
+letters = {'hebrew': [], 'aramaic':[]}
 
 title = [{
     'id': 'title',
@@ -65,7 +65,8 @@ with open('letters.json', 'r') as letter_file:
 
         letter = { **letter, **l['fields'] }
         letter['char'] = unicodedata.normalize('NFC', letter['char'].strip())
-        letters.append(letter)
+        
+        letters[letter['language']].append(letter)
 
 def get_letter_id(letter, language):
     letter = unicodedata.normalize('NFC', letter)
